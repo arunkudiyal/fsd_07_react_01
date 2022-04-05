@@ -1,26 +1,51 @@
-import './App.css';
-import Header from './components/Header/Header';
+import { Component } from 'react';
 
-function App() {
-  const isTrue = false;
-  const bClass = 'primary'
-  const bText = 'Click Me!'
-  const onButtonClickHandler = () => {
-    console.log('Button was clicked from App Compoennet!')
+import './App.css';
+import Person from './components/Person/Person';
+
+class App extends Component {
+  // State -> A way to access / create data from within the component (Properties of a class)
+  // State in a component is nothing but just a normal JS Object
+  state = {
+    persons: [
+      { name: "Stephan", age: 30 },
+      { name: "Elenea", age: 27 },
+      { name: "Jack", age: 25 }
+    ],
+    someOtherState: 'Some Other State Value'
   }
 
-  return (
-    // JSX - HTML Template
-    <div>
-        <div className='container-fluid'>
-          <Header text="Welcome to React!" btnText={bText} btnColor={bClass} buttonHandler={onButtonClickHandler} />
-        </div>
+  onClickEventListner = () => {
+    // DON NOT DO THIS : this.state.persons[0].name = 'Steph'
+    this.setState({
+      persons: [
+        { name: "Steph", age: 30 },
+        { name: "Elena", age: 29 },
+        { name: "Jacky", age: 25 }
+      ]
+    })
+  }
 
-        <div className="container">
-          <p> { isTrue ? 'Yes' : 'No' } </p>
-        </div>
-    </div>
-  );
+  render() {
+    console.log(this.state)
+
+    return (
+      <div className='container'>
+        <h1 className='page-header'>Person Management System</h1>
+        <Person 
+          name={this.state.persons[0].name} 
+          age={this.state.persons[0].age} />
+        <Person 
+          name={this.state.persons[1].name} 
+          age={this.state.persons[1].age} />
+        <Person 
+          name={this.state.persons[2].name} 
+          age={this.state.persons[2].age}> This is Person - 2 </Person>
+
+        <button onClick={this.onClickEventListner} className='btn btn-danger'>Switch Data</button>
+      </div>
+    );
+  }
 }
 
 export default App;
