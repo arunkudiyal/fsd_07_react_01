@@ -8,7 +8,7 @@ const Person = (props) => {
     return(
         <div>
             {/* <p className="lead">{props.children}</p> */}
-            <p>My name is {props.name} and I am {props.age} years old </p>
+            <p style={ {fontSize: '1.2em'} }>My name is {props.name} and I am {props.age} years old </p>
 
             {/* INLINE STYLE IN JSX */}
             {/* <input style={ {border: '2px solid navy'} } onChange={props.changed} type="text" placeholder="enter new name..." /> */}

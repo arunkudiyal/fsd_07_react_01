@@ -10,9 +10,11 @@ class App extends Component {
     persons: [
       { name: "Stephan", age: 30 },
       { name: "Elenea", age: 27 },
-      { name: "Jack", age: 25 }
+      { name: "Jack", age: 25 },
+      { name: "Vicky", age: "23" }
     ],
-    someOtherState: 'Some Other State Value'
+    someOtherState: 'Some Other State Value',
+    showPerson: false
   }
 
   onClickEventListner = (e) => {
@@ -37,23 +39,44 @@ class App extends Component {
     })
   }
 
+  togglePersonsHandler = () => {
+    this.setState( {showPerson: !this.state.showPerson} )
+  }
+
   render() {
+    // JavaScript
+    let persons = null;
+    if( this.state.showPerson ) {
+      persons = (
+        <div>
+          { this.state.persons.map( person => {
+            return (
+              <Person 
+                name={person.name} 
+                age={person.age} />
+            )
+          } ) }
+        </div> 
+      )
+    } else {
+      persons = null
+    }
+
     return (
+      // JSX Expression
       <div className='container'>
         <h1 className='page-header'>Person Management System</h1>
-        <Person 
-          name={this.state.persons[0].name} 
-          age={this.state.persons[0].age}
-          changed={(e) => this.switchNameHandler(e)} />
-        <Person 
-          name={this.state.persons[1].name} 
-          age={this.state.persons[1].age} />
-        <Person 
-          name={this.state.persons[2].name} 
-          age={this.state.persons[2].age}> This is Person - 2 </Person>
-        
+        { persons }
         <br /> <br />
-        <button onClick={(e) => this.onClickEventListner(e)} className='btn btn-danger'>Switch Data</button>
+        <div className="row">
+          <div className="col-xs-6">
+              <button onClick={this.togglePersonsHandler} className='btn btn-primary'>Toggle Persons</button>
+            </div>
+            <div className="col-xs-6">
+              {/* <button onClick={(e) => this.onClickEventListner(e)} className='btn btn-danger'>Switch Data</button> */}
+              <button className='btn btn-danger'>Switch Data</button>
+            </div>
+        </div>
       </div>
     );
   }
