@@ -14,7 +14,14 @@ const Person = (props) => {
             {/* <input style={ {border: '2px solid navy'} } onChange={props.changed} type="text" placeholder="enter new name..." /> */}
 
             {/* PASSING STYLES AS OBJECTS IN JSX */}
-            <input style={ textBoxStyle } onChange={props.changed} type="text" placeholder="enter new name..." />
+            <div className="row">
+                <div className="col-xs-6">
+                    <input style={ textBoxStyle } onChange={props.changed} type="text" placeholder="enter new name..." />
+                </div>
+                <div className="col-xs-6">
+                    <button onClick={props.clicked} className="btn btn-danger">Delete Person</button>
+                </div>
+            </div>
             <hr />
         </div>
     )

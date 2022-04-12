@@ -8,10 +8,10 @@ class App extends Component {
   // State in a component is nothing but just a normal JS Object
   state = {
     persons: [
-      { name: "Stephan", age: 30 },
-      { name: "Elenea", age: 27 },
-      { name: "Jack", age: 25 },
-      { name: "Vicky", age: "23" }
+      { id:"1011", name: "Stephan", age: 30 },
+      { id:"1012", name: "Elenea", age: 27 },
+      { id:"1013", name: "Jack", age: 25 },
+      { id:"1014", name: "Vicky", age: "23" }
     ],
     someOtherState: 'Some Other State Value',
     showPerson: false
@@ -39,6 +39,16 @@ class App extends Component {
     })
   }
 
+  nameChangedHanler = (event, personId) => {
+  }
+
+  deletePerson = (e, personIndex) => {
+    // MUTATING STATE DIRECTLY - const personsCopy = this.state.persons
+    const personsCopy = [...this.state.persons]
+    personsCopy.splice(personIndex, 1)
+    this.setState({persons: personsCopy})
+  }
+
   togglePersonsHandler = () => {
     this.setState( {showPerson: !this.state.showPerson} )
   }
@@ -49,11 +59,14 @@ class App extends Component {
     if( this.state.showPerson ) {
       persons = (
         <div>
-          { this.state.persons.map( person => {
+          { this.state.persons.map( (person, index) => {
             return (
-              <Person 
+              <Person
+                key={person.id} 
                 name={person.name} 
-                age={person.age} />
+                age={person.age}
+                changed={(e) => this.nameChangedHanler(e, person.id, index)}
+                clicked={(e) => this.deletePerson(e, index)} />
             )
           } ) }
         </div> 
@@ -74,7 +87,7 @@ class App extends Component {
             </div>
             <div className="col-xs-6">
               {/* <button onClick={(e) => this.onClickEventListner(e)} className='btn btn-danger'>Switch Data</button> */}
-              <button className='btn btn-danger'>Switch Data</button>
+              <button className='btn btn-warning'>Switch Data</button>
             </div>
         </div>
       </div>
