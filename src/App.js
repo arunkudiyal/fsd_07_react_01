@@ -7,11 +7,13 @@ class App extends Component {
   // State -> A way to access / create data from within the component (Properties of a class)
   // State in a component is nothing but just a normal JS Object
   state = {
+    // persons --> REACT LIST --> An Array which is a part of your state
     persons: [
       { id:"1011", name: "Stephan", age: 30 },
       { id:"1012", name: "Elenea", age: 27 },
       { id:"1013", name: "Jack", age: 25 },
-      { id:"1014", name: "Vicky", age: "23" }
+      { id:"1014", name: "Vicky", age: 23 },
+      { id:"1015", name:"Matt", age: 20 }
     ],
     someOtherState: 'Some Other State Value',
     showPerson: false
@@ -40,13 +42,21 @@ class App extends Component {
   }
 
   nameChangedHanler = (event, personId) => {
+    const personIndex = this.state.persons.findIndex(p => p.id === personId)
+    const person = { ...this.state.persons[personIndex] }
+    person.name = event.target.value
+
+    const personsCopy = [ ...this.state.persons ]
+    personsCopy[personIndex] = person
+
+    this.setState( {persons: personsCopy} )
   }
 
-  deletePerson = (e, personIndex) => {
+  deletePersonHanlder = (e, personIndex) => {
     // MUTATING STATE DIRECTLY - const personsCopy = this.state.persons
-    const personsCopy = [...this.state.persons]
+    const personsCopy = [ ...this.state.persons ]
     personsCopy.splice(personIndex, 1)
-    this.setState({persons: personsCopy})
+    this.setState( {persons: personsCopy} )
   }
 
   togglePersonsHandler = () => {
@@ -65,11 +75,25 @@ class App extends Component {
                 key={person.id} 
                 name={person.name} 
                 age={person.age}
-                changed={(e) => this.nameChangedHanler(e, person.id, index)}
-                clicked={(e) => this.deletePerson(e, index)} />
+                changed={(e) => this.nameChangedHanler(e, person.id)}
+                clicked={(e) => this.deletePersonHanlder(e, index)} />
             )
           } ) }
         </div> 
+        // <div>
+        //       <Person
+        //         name={this.state.persons[0].name}
+        //         age={this.state.persons[0].age} />
+        //       <Person
+        //         name={this.state.persons[1].name}
+        //         age={this.state.persons[1].age} />
+        //       <Person
+        //         name={this.state.persons[2].name}
+        //         age={this.state.persons[2].age} />
+        //       <Person
+        //         name={this.state.persons[3].name}
+        //         age={this.state.persons[3].age} />
+        // </div>
       )
     } else {
       persons = null
