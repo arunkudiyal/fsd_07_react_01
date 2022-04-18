@@ -2,6 +2,7 @@ import { Component } from 'react';
 
 import './App.css';
 import Persons from '../components/Persons/Persons';
+import Cockpit from '../components/Cockpit/Cockpit';
 
 class App extends Component {
   // State -> A way to access / create data from within the component (Properties of a class)
@@ -82,18 +83,11 @@ class App extends Component {
     return (
       // JSX Expression
       <div className='container'>
-        <h1 className='page-header'>Person Management System</h1>
+        <h1 className='page-header'> {this.props.appTitle} </h1>
         { persons }
         <br /> <br />
-        <div className="row">
-          <div className="col-xs-6">
-              <button onClick={this.togglePersonsHandler} className='btn btn-primary'>Toggle Persons</button>
-            </div>
-            <div className="col-xs-6">
-              {/* <button onClick={(e) => this.onClickEventListner(e)} className='btn btn-danger'>Switch Data</button> */}
-              <button className='btn btn-warning'>Switch Data</button>
-            </div>
-        </div>
+        <Cockpit
+          toggle={this.togglePersonsHandler} />
       </div>
     );
   }
