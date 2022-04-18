@@ -1,7 +1,7 @@
 import { Component } from 'react';
 
 import './App.css';
-import Person from './components/Person/Person';
+import Persons from '../components/Persons/Persons';
 
 class App extends Component {
   // State -> A way to access / create data from within the component (Properties of a class)
@@ -68,32 +68,12 @@ class App extends Component {
     let persons = null;
     if( this.state.showPerson ) {
       persons = (
-        <div>
-          { this.state.persons.map( (person, index) => {
-            return (
-              <Person
-                key={person.id} 
-                name={person.name} 
-                age={person.age}
-                changed={(e) => this.nameChangedHanler(e, person.id)}
-                clicked={(e) => this.deletePersonHanlder(e, index)} />
-            )
-          } ) }
-        </div> 
-        // <div>
-        //       <Person
-        //         name={this.state.persons[0].name}
-        //         age={this.state.persons[0].age} />
-        //       <Person
-        //         name={this.state.persons[1].name}
-        //         age={this.state.persons[1].age} />
-        //       <Person
-        //         name={this.state.persons[2].name}
-        //         age={this.state.persons[2].age} />
-        //       <Person
-        //         name={this.state.persons[3].name}
-        //         age={this.state.persons[3].age} />
-        // </div>
+              <div>
+                <Persons 
+                  persons={this.state.persons}
+                  changed={this.nameChangedHanler}
+                  delete={this.deletePersonHanlder} />
+              </div>
       )
     } else {
       persons = null
