@@ -5,20 +5,56 @@ import Persons from '../components/Persons/Persons';
 import Cockpit from '../components/Cockpit/Cockpit';
 
 class App extends Component {
+  constructor(props) {
+    super(props)
+    console.log(`[App.js] constructor()`)
+    console.log(this.props)
+    this.state = {
+      // persons --> REACT LIST --> An Array which is a part of your state
+      persons: [
+        { id:"1011", name: "Stephan", age: 30 },
+        { id:"1012", name: "Elenea", age: 27 },
+        { id:"1013", name: "Jack", age: 25 },
+        { id:"1014", name: "Vicky", age: 23 },
+        { id:"1015", name:"Matt", age: 20 }
+      ],
+      othersState: [],
+      someOtherState: 'Some Other State Value',
+      showPerson: false
+    }
+  }
   // State -> A way to access / create data from within the component (Properties of a class)
   // State in a component is nothing but just a normal JS Object
-  state = {
-    // persons --> REACT LIST --> An Array which is a part of your state
-    persons: [
-      { id:"1011", name: "Stephan", age: 30 },
-      { id:"1012", name: "Elenea", age: 27 },
-      { id:"1013", name: "Jack", age: 25 },
-      { id:"1014", name: "Vicky", age: 23 },
-      { id:"1015", name:"Matt", age: 20 }
-    ],
-    someOtherState: 'Some Other State Value',
-    showPerson: false
+  // state = { ... }
+  // A objectName = new A()
+
+  static getDerivedStateFromProps(props, state) {
+    console.log(`[App.js] getDerivedStateFromProps()`)
+    console.log(props)
+    console.log(state)
+    return state
   }
+
+  componentDidMount = () => {
+    // Reach an API
+    fetch('https://api.github.com/users')
+      .then( response => response.json() )
+      // .then( data => this.setState(data) )
+      .then( data => console.log(data) )
+      .then( data => this.setState({otherStae: data}) )
+      .catch(err => console.log(err))
+
+    console.log(`[App.js] componentDidMount()`)
+    console.log(this.state);
+  }
+
+  // componentWillMount() {
+  //   console.log(`[App.js] componentWillMount()`)
+  // }
+
+  // componentWillUnmount() {
+  //   console.log(`[App.js] componentWillUnmount()`)
+  // }
 
   onClickEventListner = (e) => {
     console.log(e)
@@ -65,6 +101,7 @@ class App extends Component {
   }
 
   render() {
+    console.log(`[App.js] render()`)
     // JavaScript
     let persons = null;
     if( this.state.showPerson ) {

@@ -1,6 +1,7 @@
 import React from "react";
 
 const Cockpit = (props) => {
+    console.log(`[App.js] Cockpit`);
     return (
         <div className="row">
           <div className="col-xs-6">

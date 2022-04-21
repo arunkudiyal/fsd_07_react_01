@@ -1,8 +1,10 @@
 const Person = (props) => {
+
     const textBoxStyle = {
         border: '2px solid red',
         padding: '5px'
     }
+    console.log(`[App.js] Person`)
 
     // Props -> A way to access the data from outside the component
     return(
