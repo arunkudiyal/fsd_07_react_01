@@ -4,7 +4,7 @@ const Person = (props) => {
         border: '2px solid red',
         padding: '5px'
     }
-    console.log(`[App.js] Person`)
+    console.log(`[Person.js] rendering...`)
 
     // Props -> A way to access the data from outside the component
     return(
