@@ -8,7 +8,7 @@ class App extends Component {
   constructor(props) {
     super(props)
     console.log(`[App.js] constructor()`)
-    console.log(this.props)
+    // console.log(this.props)
     this.state = {
       // persons --> REACT LIST --> An Array which is a part of your state
       persons: [
@@ -18,9 +18,9 @@ class App extends Component {
         { id:"1014", name: "Vicky", age: 23 },
         { id:"1015", name:"Matt", age: 20 }
       ],
-      othersState: [],
       someOtherState: 'Some Other State Value',
-      showPerson: false
+      showPerson: false,
+      showCockpit: true
     }
   }
   // State -> A way to access / create data from within the component (Properties of a class)
@@ -30,22 +30,22 @@ class App extends Component {
 
   static getDerivedStateFromProps(props, state) {
     console.log(`[App.js] getDerivedStateFromProps()`)
-    console.log(props)
-    console.log(state)
+    // console.log(props)
+    // console.log(state)
     return state
   }
 
   componentDidMount = () => {
     // Reach an API
-    fetch('https://api.github.com/users')
-      .then( response => response.json() )
-      // .then( data => this.setState(data) )
-      .then( data => console.log(data) )
-      .then( data => this.setState({otherStae: data}) )
-      .catch(err => console.log(err))
+    // fetch('https://api.github.com/users')
+    //   .then( response => response.json() )
+    //   // .then( data => this.setState(data) )
+    //   .then( data => console.log(data) )
+    //   .then( data => this.setState({otherStae: data}) )
+    //   .catch(err => console.log(err))
 
     console.log(`[App.js] componentDidMount()`)
-    console.log(this.state);
+    // console.log(this.state);
   }
 
   // componentWillMount() {
@@ -100,6 +100,10 @@ class App extends Component {
     this.setState( {showPerson: !this.state.showPerson} )
   }
 
+  removeCockpitHandler = () => {
+    this.setState( {showCockpit: false} )
+  }
+
   render() {
     console.log(`[App.js] render()`)
     // JavaScript
@@ -121,10 +125,17 @@ class App extends Component {
       // JSX Expression
       <div className='container'>
         <h1 className='page-header'> {this.props.appTitle} </h1>
-        { persons }
-        <br /> <br />
-        <Cockpit
-          toggle={this.togglePersonsHandler} />
+        { this.state.showCockpit ? <div>
+          { persons }
+          <br /> <br />
+          <>
+            <Cockpit
+              persons={this.state.persons}
+              showPersons={this.state.showPerson}
+              toggle={this.togglePersonsHandler}
+              delete={this.removeCockpitHandler} />
+          </>
+        </div> : null}
       </div>
     );
   }
