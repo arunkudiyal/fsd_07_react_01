@@ -1,8 +1,9 @@
-import { Component } from 'react';
+import React, { Component } from 'react';
 
 import './App.css';
 import Persons from '../components/Persons/Persons';
 import Cockpit from '../components/Cockpit/Cockpit';
+import Aux from '../hoc/Aux';
 
 class App extends Component {
   constructor(props) {
@@ -123,20 +124,22 @@ class App extends Component {
 
     return (
       // JSX Expression
-      <div className='container'>
+      <Aux classes="container" anObject={ {name: 'John Doe', age: "22", email: "johndoe@gmail.com" } }>
         <h1 className='page-header'> {this.props.appTitle} </h1>
         { this.state.showCockpit ? <div>
           { persons }
           <br /> <br />
-          <>
+          <Aux>
             <Cockpit
               persons={this.state.persons}
               showPersons={this.state.showPerson}
               toggle={this.togglePersonsHandler}
-              delete={this.removeCockpitHandler} />
-          </>
+              delete={this.removeCockpitHandler}
+              props1={1}
+              props2="Hello..." />
+          </Aux>
         </div> : null}
-      </div>
+      </Aux>
     );
   }
 }
